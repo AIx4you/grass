@@ -19,12 +19,15 @@ extensionId = 'ilehaonighjijnmpnagapkhpcdbhclfg'
 CRX_URL = "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=98.0.4758.102&acceptformat=crx2,crx3&x=id%3D~~~~%26uc&nacl_arch=x86-64"
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"
 
+
 try:
     USER = os.environ['GRASS_USER']
     PASSW = os.environ['GRASS_PASS']
+    PROXY = os.environ['GRASS_PROXY']
 except:
     USER = ''
     PASSW = ''
+    PROXY = ''
 
 try:
     ALLOW_DEBUG = os.environ['ALLOW_DEBUG']
@@ -83,9 +86,11 @@ print('Downloaded! Installing extension and driver manager...')
 
 options = webdriver.ChromeOptions()
 #options.binary_location = '/usr/bin/chromium-browser'
-options.add_argument("--headless=new")
+# options.add_argument("--headless=new")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument('--no-sandbox')
+if PROXY:
+    options.add_argument(f'--proxy-server={PROXY}')
 
 options.add_extension('grass.crx')
 
@@ -190,7 +195,7 @@ def get():
         epoch_earnings = False
         print('Could not get earnings!')
         generate_error_report(driver)
-    
+
     try:
         #find all chakra-badge
         badges = driver.find_elements('xpath', '//*[@class="chakra-badge"]')
