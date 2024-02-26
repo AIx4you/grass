@@ -18,8 +18,9 @@ docker run -d \
     -p 8080:80 \
     -e GRASS_USER=myuser@mail.com \
     -e GRASS_PASS=mypass \
+    -e GRASS_PROXY=74.115.6.249:25204 \
     -e ALLOW_DEBUG=False \
-    camislav/grass
+    AIx4you/grass
 ```
 
 Please replace 8080 with the port you want to be able to access the status with, as well as GRASS_USER and GRASS_PASS
